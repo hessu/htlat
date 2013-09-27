@@ -364,7 +364,7 @@ long long calc_rtt(struct timeval tv1, struct timeval tv2)
  
 void printsummary(void)
 {
-	double total_timef, total_realf;
+	double total_realf;
 	long long total_real = 0;
 #ifdef THRDEBUGGING
 	struct dnscache_t *c;
@@ -377,7 +377,7 @@ void printsummary(void)
 	
 	if (total_total_lat < 1)
 		total_total_lat = 1;
-	total_timef = (double)total_total_lat / 1000000;
+	//total_timef = (double)total_total_lat / 1000000;
 	
 	printf("TOTAL %d tr %d ok %d err %d nerr %lld b %.2f s %.2Lf b/s %.2f tps\n",
 		tried, succ, tried - succ, neterr, total_size, total_realf, (long double)total_size / (long double)total_realf, (double)succ / total_realf);
@@ -696,14 +696,14 @@ int getobj(char *ghost, char *gport, char *guri, int complete_req)
 	
 	char refstr[] = "Cache-Control: no-cache\r\nPragma: no-cache\r\n";
 	char *refptr;
-	char buf[BUFLEN], ssltempbuf[BUFLEN];
+	char buf[BUFLEN];
 	int len;
-	
-	char *p1, *p2;
 
 	long size = 0;
 	
 #ifdef OpenSSL
+	char ssltempbuf[BUFLEN];
+	char *p1, *p2;
 
 	SSL_CTX *ctx = NULL;
 	SSL_METHOD *meth = NULL;
@@ -719,7 +719,7 @@ int getobj(char *ghost, char *gport, char *guri, int complete_req)
 
 	struct timeval tic_reqsent, tic_hdrgot, tic_datagot = { 0, 0}, tic_datadone;
 	long long resolv_lat, tcpcon_lat, req_lat, data_lat, total_lat;
-	float resolv_lat_f, tcpcon_lat_f, req_lat_f, data_lat_f, total_lat_f;
+	float tcpcon_lat_f, req_lat_f, data_lat_f, total_lat_f;
 
 	fflush(stdout);
 
@@ -1141,7 +1141,6 @@ int getobj(char *ghost, char *gport, char *guri, int complete_req)
 		fprintf(stdout, "\n\n");
 	
 	if (showurls) {
-		resolv_lat_f = (float)resolv_lat / 1000;
 		tcpcon_lat_f = (float)tcpcon_lat / 1000;
 		req_lat_f = (float)req_lat / 1000;
 		data_lat_f = (float)data_lat / 1000;
