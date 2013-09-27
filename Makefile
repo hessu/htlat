@@ -2,7 +2,7 @@
 all: htlat
 
 # change next line to no (lowercase) if you dont have OpenSSL
-#SSL=no
+SSL=no
 
 # change this to point to the compiled (or installed) OpenSSL tree
 
@@ -15,11 +15,10 @@ all: htlat
 CC = gcc
 LD = gcc
 
-
-#CFLAGS = -Wall -Wstrict-prototypes -g -D_REENTRANT 
-CFLAGS = ${SSL} -Wall -Wstrict-prototypes -g -D_REENTRANT
-LDFLAGS = -lpthread -lssl -lcrypto
-#LDFLAGS = -lpthread
+CFLAGS = -Wall -Wstrict-prototypes -g -D_REENTRANT 
+#CFLAGS = ${SSL} -Wall -Wstrict-prototypes -g -D_REENTRANT
+#LDFLAGS = -lpthread -lssl -lcrypto
+LDFLAGS = -lpthread
 
 
 #  -L/usr/local/ssl/lib -lssl  -lcrypto
